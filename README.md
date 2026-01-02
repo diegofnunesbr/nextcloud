@@ -8,7 +8,7 @@ Este guia descreve o deployment do **Nextcloud** com banco **MariaDB** em um clu
 - `Ingress Controller NGINX` instalado
 - `cert-manager` instalado
 - `ClusterIssuer` criado com o nome `selfsigned`
-- IP `192.168.15.7` disponível na rede
+- IP `192.168.1.7` disponível na rede
 
 ---
 
