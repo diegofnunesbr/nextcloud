@@ -173,6 +173,7 @@ metadata:
   namespace: nextcloud
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "10g"
 spec:
   ingressClassName: nginx
   tls:
