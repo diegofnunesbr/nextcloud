@@ -158,7 +158,7 @@ metadata:
 spec:
   secretName: nextcloud-tls
   issuerRef:
-    name: letsencrypt-http
+    name: letsencrypt-dns
     kind: ClusterIssuer
   commonName: nextcloud.diegofnunesbr.ddnsfree.com
   dnsNames:
