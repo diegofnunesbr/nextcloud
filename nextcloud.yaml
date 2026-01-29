@@ -54,7 +54,7 @@ spec:
     spec:
       containers:
       - name: mariadb
-        image: mariadb:11
+        image: mariadb:latest
         env:
         - name: MARIADB_ROOT_PASSWORD
           valueFrom:
@@ -97,7 +97,7 @@ spec:
     spec:
       containers:
       - name: nextcloud
-        image: nextcloud:29
+        image: nextcloud:latest
         env:
         - name: MYSQL_HOST
           value: mariadb-service
