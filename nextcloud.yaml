@@ -62,9 +62,9 @@ spec:
               name: nextcloud-db-secret
               key: root_password
         - name: MARIADB_DATABASE
-          value: nextcloud
+          value: "nextcloud"
         - name: MARIADB_USER
-          value: nextcloud
+          value: "nextcloud"
         - name: MARIADB_PASSWORD
           valueFrom:
             secretKeyRef:
@@ -100,20 +100,18 @@ spec:
         image: nextcloud:latest
         env:
         - name: MYSQL_HOST
-          value: mariadb-service
+          value: "mariadb-service"
         - name: MYSQL_DATABASE
-          value: nextcloud
+          value: "nextcloud"
         - name: MYSQL_USER
-          value: nextcloud
+          value: "nextcloud"
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: nextcloud-db-secret
               key: password
-        - name: OVERWRITEHOST
-          value: nextcloud.diegofnunesbr.ddnsfree.com
         - name: OVERWRITEPROTOCOL
-          value: https
+          value: "https"
         ports:
           - containerPort: 80
         volumeMounts:
@@ -136,6 +134,7 @@ spec:
   ports:
     - port: 3306
       targetPort: 3306
+      protocol: TCP
 ---
 apiVersion: v1
 kind: Service
@@ -149,6 +148,7 @@ spec:
   ports:
     - port: 80
       targetPort: 80
+      protocol: TCP
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
@@ -157,12 +157,14 @@ metadata:
   namespace: nextcloud
 spec:
   secretName: nextcloud-tls
-  issuerRef:
-    name: letsencrypt-dns
-    kind: ClusterIssuer
-  commonName: nextcloud.diegofnunesbr.ddnsfree.com
+  duration: 8760h
+  renewBefore: 720h
+  commonName: nextcloud.local
   dnsNames:
-    - nextcloud.diegofnunesbr.ddnsfree.com
+    - nextcloud.local
+  issuerRef:
+    name: selfsigned
+    kind: ClusterIssuer
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -172,15 +174,14 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
     nginx.ingress.kubernetes.io/proxy-body-size: "10g"
-    nginx.ingress.kubernetes.io/proxy-buffering: "off"
 spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - nextcloud.diegofnunesbr.ddnsfree.com
+        - nextcloud.local
       secretName: nextcloud-tls
   rules:
-    - host: nextcloud.diegofnunesbr.ddnsfree.com
+    - host: nextcloud.local
       http:
         paths:
           - path: /
