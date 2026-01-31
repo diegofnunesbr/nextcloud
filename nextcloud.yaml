@@ -6,7 +6,7 @@ metadata:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: mariadb-pvc
+  name: mysql-pvc
   namespace: nextcloud
 spec:
   accessModes:
@@ -34,51 +34,51 @@ metadata:
   namespace: nextcloud
 type: Opaque
 data:
-  mariadb_password: TmV4dGNsb3VkQGxvY2FsIw==
-  mariadb_root_password: TmV4dGNsb3VkQHJvb3RAbG9jYWwj
+  mysql_password: TmV4dGNsb3VkQGxvY2FsIw==
+  mysql_root_password: TmV4dGNsb3VkQHJvb3RAbG9jYWwj
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mariadb-deployment
+  name: mysql-deployment
   namespace: nextcloud
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mariadb
+      app: mysql
   template:
     metadata:
       labels:
-        app: mariadb
+        app: mysql
     spec:
       containers:
-      - name: mariadb
-        image: mariadb:latest
+      - name: mysql
+        image: mysql:8.0
         env:
-        - name: MARIADB_ROOT_PASSWORD
+        - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
               name: nextcloud-db-secret
-              key: mariadb_root_password
-        - name: MARIADB_DATABASE
+              key: mysql_root_password
+        - name: MYSQL_DATABASE
           value: "nextcloud"
-        - name: MARIADB_USER
+        - name: MYSQL_USER
           value: "nextcloud"
-        - name: MARIADB_PASSWORD
+        - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: nextcloud-db-secret
-              key: mariadb_password
+              key: mysql_password
         ports:
           - containerPort: 3306
         volumeMounts:
-          - name: mariadb-data
+          - name: mysql-data
             mountPath: /var/lib/mysql
       volumes:
-        - name: mariadb-data
+        - name: mysql-data
           persistentVolumeClaim:
-            claimName: mariadb-pvc
+            claimName: mysql-pvc
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -100,7 +100,7 @@ spec:
         image: nextcloud:latest
         env:
         - name: MYSQL_HOST
-          value: "mariadb-service"
+          value: "mysql-service"
         - name: MYSQL_DATABASE
           value: "nextcloud"
         - name: MYSQL_USER
@@ -109,7 +109,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: nextcloud-db-secret
-              key: password
+              key: mysql_password
         - name: OVERWRITEPROTOCOL
           value: "https"
         ports:
@@ -125,12 +125,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mariadb-service
+  name: mysql-service
   namespace: nextcloud
 spec:
   type: ClusterIP
   selector:
-    app: mariadb
+    app: mysql
   ports:
     - port: 3306
       targetPort: 3306
