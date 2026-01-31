@@ -16,7 +16,8 @@ Este guia descreve a instalação e remoção do **Nextcloud** com o banco **Mar
 
 ```bash
 git clone https://github.com/diegofnunesbr/nextcloud.git
-kubectl apply -f nextcloud/applications/argocd-nextcloud.yaml
+cd nextcloud
+kubectl apply -f applications/argocd-nextcloud.yaml
 ```
 
 ## Configurar o acesso local para o Nextcloud
@@ -32,6 +33,6 @@ https://nextcloud.local/
 ## Remover o Nextcloud
 
 ```bash
-kubectl delete -f nextcloud/applications/argocd-nextcloud.yaml
+kubectl delete -f applications/argocd-nextcloud.yaml
 kubectl delete namespace nextcloud
 ```

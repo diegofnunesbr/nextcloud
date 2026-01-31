@@ -34,8 +34,8 @@ metadata:
   namespace: nextcloud
 type: Opaque
 data:
-  password: bmV4dGNsb3VkQGxvY2FsIzIwMjY=
-  root_password: TmV4dGNsb3VkUm9vdDIwMjUK
+  mariadb_password: TmV4dGNsb3VkQGxvY2FsIw==
+  mariadb_root_password: TmV4dGNsb3VkQHJvb3RAbG9jYWwj
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -60,7 +60,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: nextcloud-db-secret
-              key: root_password
+              key: mariadb_root_password
         - name: MARIADB_DATABASE
           value: "nextcloud"
         - name: MARIADB_USER
@@ -69,7 +69,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: nextcloud-db-secret
-              key: password
+              key: mariadb_password
         ports:
           - containerPort: 3306
         volumeMounts:
