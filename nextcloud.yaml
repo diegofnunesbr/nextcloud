@@ -159,11 +159,11 @@ metadata:
   namespace: nextcloud
 spec:
   secretName: nextcloud-tls
-  commonName: nextcloud.local
+  commonName: nextcloud.diegofnunesbr.com
   dnsNames:
-    - nextcloud.local
+    - nextcloud.diegofnunesbr.com
   issuerRef:
-    name: selfsigned
+    name: letsencrypt-cloudflare
     kind: ClusterIssuer
 ---
 apiVersion: networking.k8s.io/v1
@@ -178,10 +178,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - nextcloud.local
+        - nextcloud.diegofnunesbr.com
       secretName: nextcloud-tls
   rules:
-    - host: nextcloud.local
+    - host: nextcloud.diegofnunesbr.com
       http:
         paths:
           - path: /
