@@ -20,7 +20,7 @@ cd nextcloud
 kubectl apply -f applications/argocd-nextcloud.yaml
 ```
 
-## Configurar o acesso local para o Nextcloud
+## Configurar o acesso local para o Nextcloud no Windows
 
 ```bash
 echo "192.168.1.3 nextcloud.local" | sudo tee -a /mnt/c/Windows/System32/drivers/etc/hosts
