@@ -10,6 +10,16 @@ Este guia descreve a instalação e remoção do **Nextcloud** com o banco **Mar
 - `cert-manager` instalado
 - `ClusterIssuer` instalado
 
+## Estrutura do repositório
+
+```text
+nextcloud/
+├── applications/
+│   └── argocd.yaml        # Application do Argo CD
+├── nextcloud.yaml         # Manifests do Nextcloud (domínio público)
+└── README.md
+```
+
 ---
 
 ## Instalar o Nextcloud
@@ -20,19 +30,13 @@ cd nextcloud
 kubectl apply -f applications/argocd-nextcloud.yaml
 ```
 
-## Configurar o acesso local para o Nextcloud no Windows
-
-```bash
-echo "192.168.1.3 nextcloud.local" | sudo tee -a /mnt/c/Windows/System32/drivers/etc/hosts
-```
-
 ## Acessar o Nextcloud
 
-https://nextcloud.local/
+https://nextcloud.diegofnunesbr.com/
 
 ## Remover o Nextcloud
 
 ```bash
 kubectl delete -f applications/argocd-nextcloud.yaml
-kubectl delete namespace nextcloud
+kubectl delete namespace nextcloud --ignore-not-found
 ```
