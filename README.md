@@ -37,6 +37,7 @@ https://nextcloud.diegofnunesbr.com/
 ## Remover o Nextcloud
 
 ```bash
+cd nextcloud
 kubectl delete -f applications/argocd-nextcloud.yaml
 kubectl delete namespace nextcloud --ignore-not-found
 ```
