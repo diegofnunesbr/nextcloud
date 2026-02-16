@@ -1,6 +1,6 @@
-# Nextcloud
+# nextcloud
 
-Este guia descreve a instalação e remoção do **Nextcloud** com o banco **MariaDB** em um cluster Kubernetes, utilizando o manifesto `nextcloud.yaml`.
+Este guia descreve a instalação e remoção do **nextcloud** com o banco **mariadb** em um cluster Kubernetes, utilizando o manifesto `nextcloud.yaml`.
 
 ## Pré-requisitos
 
@@ -15,29 +15,29 @@ Este guia descreve a instalação e remoção do **Nextcloud** com o banco **Mar
 ```text
 nextcloud/
 ├── applications/
-│   └── argocd.yaml        # Application do Argo CD
-├── nextcloud.yaml         # Manifests do Nextcloud
+│   └── argocd.yaml     # Application do Argo CD
+├── nextcloud.yaml      # Manifests do nextcloud
 └── README.md
 ```
 
 ---
 
-## Instalar o Nextcloud
+## Instalar o nextcloud
 
 ```bash
 git clone https://github.com/diegofnunesbr/nextcloud.git
 cd nextcloud
-kubectl apply -f applications/argocd-nextcloud.yaml
+kubectl apply -f applications/argocd.yaml
 ```
 
-## Acessar o Nextcloud
+## Acessar o nextcloud
 
 https://nextcloud.diegofnunesbr.com/
 
-## Remover o Nextcloud
+## Remover o nextcloud
 
 ```bash
 cd nextcloud
-kubectl delete -f applications/argocd-nextcloud.yaml
+kubectl delete -f applications/argocd.yaml
 kubectl delete namespace nextcloud --ignore-not-found
 ```
