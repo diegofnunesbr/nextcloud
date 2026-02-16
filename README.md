@@ -16,7 +16,7 @@ Este guia descreve a instalação e remoção do **Nextcloud** com o banco **Mar
 nextcloud/
 ├── applications/
 │   └── argocd.yaml        # Application do Argo CD
-├── nextcloud.yaml         # Manifests do Nextcloud (domínio público)
+├── nextcloud.yaml         # Manifests do Nextcloud
 └── README.md
 ```
 
